@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>520专属恋爱口令</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ff6b9d, #ff8e53, #ff6b9d);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .page {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 600px;
+            text-align: center;
+            display: none;
+        }
+        
+        .active {
+            display: flex;
+        }
+        
+        .page-1 h1 {
+            font-size: 2.8rem;
+            color: #ff4081;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .page-1 .heart-icon {
+            font-size: 5rem;
+            color: #ff4081;
+            margin-bottom: 30px;
+            animation: pulse 1.5s infinite;
+        }
+        
+        .password-input {
+            width: 100%;
+            max-width: 300px;
+            padding: 15px 20px;
+            font-size: 1.2rem;
+            border: 3px solid #ff4081;
+            border-radius: 50px;
+            margin-bottom: 20px;
+            text-align: center;
+            outline: none;
+            transition: all 0.3s;
+        }
+        
+        .password-input:focus {
+            box-shadow: 0 0 0 3px rgba(255, 64, 129, 0.3);
+        }
+        
+        .submit-btn {
+            background: linear-gradient(to right, #ff4081, #ff8e53);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-top: 10px;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(255, 64, 129, 0.4);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(1px);
+        }
+        
+        .hint {
+            margin-top: 20px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .page-2 h2 {
+            font-size: 2.2rem;
+            color: #ff4081;
+            margin-bottom: 40px;
+        }
+        
+        .type-options {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+        
+        .type-option {
+            background-color: #f8f8f8;
+            border-radius: 20px;
+            padding: 30px;
+            width: 250px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 3px solid transparent;
+        }
+        
+        .type-option:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+            border-color: #ff4081;
+        }
+        
+        .type-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .humorous .type-icon {
+            color: #4a6bff;
+        }
+        
+        .lively .type-icon {
+            color: #ff9d4a;
+        }
+        
+        .type-option h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+        
+        .type-option p {
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .page-3, .page-4 {
+            flex-direction: column;
+        }
+        
+        .result-title {
+            font-size: 2.5rem;
+            color: #ff4081;
+            margin-bottom: 30px;
+        }
+        
+        .person-name {
+            font-size: 2.8rem;
+            color: #4a6bff;
+            margin: 20px 0;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .person-image {
+            width: 280px;
+            height: 280px;
+            border-radius: 20px;
+            object-fit: cover;
+            margin: 20px 0;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            border: 5px solid #ff4081;
+        }
+        
+        .result-message {
+            font-size: 1.8rem;
+            margin: 20px 0;
+            color: #333;
+        }
+        
+        .back-btn {
+            background-color: #f0f0f0;
+            color: #333;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+        
+        .back-btn:hover {
+            background-color: #e0e0e0;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 15px;
+            }
+            
+            .page {
+                padding: 30px 20px;
+                min-height: 500px;
+            }
+            
+            .page-1 h1 {
+                font-size: 2.2rem;
+            }
+            
+            .type-options {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .person-image {
+                width: 220px;
+                height: 220px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page page-1 active" id="page1">
+            <div class="heart-icon">❤️</div>
+            <h1>520专属恋爱口令</h1>
+            <p style="font-size: 1.2rem; margin-bottom: 30px; color: #666;">输入正确口令，找到你的专属对象</p>
+            
+            <input type="text" class="password-input" id="password" placeholder="请输入520" maxlength="3">
+            <button class="submit-btn" id="submitPassword">确认</button>
+            <p class="hint">提示：今天是5月20日，想想有什么特别的数字~</p>
+        </div>
+        
+        <div class="page page-2" id="page2">
+            <h2>请选择你喜欢的类型</h2>
+            <div class="type-options">
+                <div class="type-option humorous" id="humorousOption">
+                    <div class="type-icon">😄</div>
+                    <h3>幽默风趣型</h3>
+                    <p>善于逗人开心，总能带给你欢乐，相处轻松愉快</p>
+                </div>
+                <div class="type-option lively" id="livelyOption">
+                    <div class="type-icon">🌟</div>
+                    <h3>活泼开朗型</h3>
+                    <p>充满活力，阳光开朗，总能给生活带来正能量</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="page page-3" id="page3">
+            <h2 class="result-title">恭喜你！</h2>
+            <p class="result-message">你的专属对象是：</p>
+            <div class="person-name">程心瑜</div>
+            <img src="qqq.jpg" alt="程心瑜" class="person-image">
+            <p class="result-message" style="font-size: 1.5rem; color: #4a6bff; margin-top: 20px;">可以可以</p>
+            <button class="back-btn" id="backFrom3">返回重新选择</button>
+        </div>
+        
+        <div class="page page-4" id="page4">
+            <h2 class="result-title">恭喜你！</h2>
+            <p class="result-message">你的专属对象是：</p>
+            <div class="person-name">程心瑜</div>
+            <img src="www.jpg" alt="程心瑜" class="person-image">
+            <p class="result-message" style="font-size: 1.5rem; color: #ff9d4a; margin-top: 20px;">牛逼</p>
+            <button class="back-btn" id="backFrom4">返回重新选择</button>
+        </div>s
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            const page1 = document.getElementById('page1');
+            const page2 = document.getElementById('page2');
+            const page3 = document.getElementById('page3');
+            const page4 = document.getElementById('page4');
+            
+            const passwordInput = document.getElementById('password');
+            const submitBtn = document.getElementById('submitPassword');
+            
+            const humorousOption = document.getElementById('humorousOption');
+            const livelyOption = document.getElementById('livelyOption');
+            
+            const backFrom3 = document.getElementById('backFrom3');
+            const backFrom4 = document.getElementById('backFrom4');
+            submitBtn.addEventListener('click', function() {
+                const password = passwordInput.value.trim();
+                
+                if (password === '520') {
+
+                    switchPage(page1, page2);
+                } else {
+                    passwordInput.style.borderColor = 'red';
+                    passwordInput.value = '';
+                    passwordInput.placeholder = '密码错误，请输入520';
+                    setTimeout(() => {
+                        passwordInput.style.borderColor = '#ff4081';
+                        passwordInput.placeholder = '请输入520';
+                    }, 1500);
+                }
+            });
+            passwordInput.addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    submitBtn.click();
+                }
+            });
+            humorousOption.addEventListener('click', function() {
+                switchPage(page2, page3);
+            });
+            
+            livelyOption.addEventListener('click', function() {
+                switchPage(page2, page4);
+            });
+            
+            backFrom3.addEventListener('click', function() {
+                switchPage(page3, page2);
+            });
+            
+            backFrom4.addEventListener('click', function() {
+                switchPage(page4, page2);
+            });
+            function switchPage(fromPage, toPage) {
+                fromPage.classList.remove('active');
+                toPage.classList.add('active');
+                toPage.classList.add('fade-in');
+                setTimeout(() => {
+                    toPage.classList.remove('fade-in');
+                }, 800);
+            }
+            const typeOptions = document.querySelectorAll('.type-option');
+            typeOptions.forEach(option => {
+                option.addEventListener('mouseenter', function() {
+                        this.style.transform = 'translateY(-10px)';
+                });
+                
+                option.addEventListener('mouseleave', function() {
+                    if (!this.classList.contains('selected')) {
+                        this.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
